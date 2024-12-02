@@ -31,9 +31,9 @@ class _QuizScreenState extends State<QuizScreen> {
   // Example quiz questions
   final List<Map<String, Object>> _quizData = [
     {
-      'question': 'What is the capital of France?',
+      'question': 'What is the capital of Spain?',
       'options': ['Paris', 'London', 'Berlin', 'Madrid'],
-      'answer': 'Paris'
+      'answer': 'Madrid'
     },
     {
       'question': 'What is 2 + 2?',
