@@ -14,7 +14,42 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: QuizScreen(),
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            'Quiz App Home',
+            style: TextStyle(fontSize: 30),
+          ),
+        ),
+        backgroundColor: const Color.fromRGBO(184, 101, 113, 1),
+      ),
+      backgroundColor: const Color.fromRGBO(184, 101, 113, 1),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigate to the quiz screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const QuizScreen()),
+            );
+          },
+          child: const Text(
+            'Start Quiz',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -106,13 +141,11 @@ class _QuizScreenState extends State<QuizScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    _currentQuestionIndex = 0;
-                    _score = 0;
-                  });
+                  // Navigate back to home screen when quiz is finished
+                  Navigator.pop(context);
                 },
                 child: const Text(
-                  'Restart Quiz',
+                  'Finish',
                   style: TextStyle(
                     fontSize: 20,
                   ),
