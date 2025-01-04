@@ -5,6 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
 }
 
 class QuizScreen extends StatefulWidget {
+  const QuizScreen({super.key});
+
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
@@ -25,8 +29,6 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int _currentQuestionIndex = 0;
   int _score = 0;
-  bool _showCheckIcon = false;
-  bool _showCloseIcon = false;
 
   // Example quiz questions
   final List<Map<String, Object>> _quizData = [
@@ -66,22 +68,13 @@ class _QuizScreenState extends State<QuizScreen> {
     if (selectedAnswer == _quizData[_currentQuestionIndex]['answer']) {
       setState(() {
         _score++;
-        _showCheckIcon = true;
-        _showCloseIcon = false;
-      });
-    } else {
-      setState(() {
-        _showCheckIcon = false;
-        _showCloseIcon = true;
       });
     }
 
     // Wait for 1 second before moving to the next question
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _currentQuestionIndex++;
-        _showCheckIcon = false;
-        _showCloseIcon = false;
       });
     });
   }
@@ -92,7 +85,7 @@ class _QuizScreenState extends State<QuizScreen> {
       return Scaffold(
         backgroundColor: const Color.fromRGBO(184, 101, 113, 1),
         appBar: AppBar(
-          title: Center(
+          title: const Center(
             child: Text(
               'Quiz Completed',
               style: TextStyle(
@@ -108,9 +101,9 @@ class _QuizScreenState extends State<QuizScreen> {
             children: [
               Text(
                 'You scored: $_score/${_quizData.length}',
-                style: TextStyle(fontSize: 50),
+                style: const TextStyle(fontSize: 50),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   setState(() {
@@ -118,7 +111,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     _score = 0;
                   });
                 },
-                child: Text(
+                child: const Text(
                   'Restart Quiz',
                   style: TextStyle(
                     fontSize: 20,
@@ -133,7 +126,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             'Quiz App',
             style: TextStyle(
@@ -147,7 +140,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
       // Background color
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -155,9 +148,9 @@ class _QuizScreenState extends State<QuizScreen> {
             // Question Text
             Text(
               _quizData[_currentQuestionIndex]['question'] as String,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Answer Options
             ...(_quizData[_currentQuestionIndex]['options'] as List<String>)
@@ -167,23 +160,15 @@ class _QuizScreenState extends State<QuizScreen> {
                         onPressed: () => _answerQuestion(option),
                         child: Text(option),
                       ),
-                    ))
-                .toList(),
+                    )),
 
-            // Show Check or Close Icon after answering
-            SizedBox(height: 90),
-            if (_showCheckIcon)
-              Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 50,
-              ),
-            if (_showCloseIcon)
-              Icon(
-                Icons.cancel,
-                color: Colors.red,
-                size: 50,
-              ),
+            // Show remaining question count
+            const SizedBox(height: 90),
+            Text(
+              'Question ${_currentQuestionIndex + 1} of ${_quizData.length}',
+              style: const TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
